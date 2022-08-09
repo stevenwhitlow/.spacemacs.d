@@ -59,8 +59,6 @@ values."
      treemacs
      (mu4e :variables
            mu4e-enable-notifications t)
-     w3m
-     github
      bibtex
      julia
      python
@@ -180,7 +178,7 @@ values."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(all-the-icons :separator arrow :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(doom :separator arrow :separator-scale 1.5)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -377,20 +375,28 @@ you should place your code here."
 
 (setq line-number-display-limit-width 2000000) ; avoid ?? line number in modeline
 (setq ess-indent-level 4)
+(setq ps-print-header nil) ; no header on printed pages
 
 ;;;;;;;;;;;;;;;
 ;; Spaceline ;;
 ;;;;;;;;;;;;;;;
 
 ;face-evil-state works with doom-nord
-(setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+;(setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
 
-(spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
+;;(spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
 ;;(spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
-(spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
-(spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
-(spaceline-all-the-icons--setup-neotree)         ;; Enable Neotree mode line
+;(spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
+;(spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
+;(spaceline-all-the-icons--setup-neotree)         ;; Enable Neotree mode line
 
+;;;;;;;;;;;;;;;;;;;
+;; Doom modeline ;;
+;;;;;;;;;;;;;;;;;;;
+
+(setq doom-modeline-modal-icon t)
+(setq doom-modeline-mu4e t)
+(mu4e-alert-enable-mode-line-display)
 
 ;;;;;;;;;;;;;;;
 ;; Ligatures ;;
@@ -512,11 +518,14 @@ you should place your code here."
 ;;Disable auto-fill mode in AUCTeX (so no linebreaks added)
 ;;The second line should be the preferred way to disable this in Spacemacs but this does not appear to currently work, so brute force it instead.
 (remove-hook 'LaTeX-mode-hook 'latex/auto-fill-mode)
-(setq latex-enable-auto-fill f)
+;;(setq latex-enable-auto-fill f)
 
 ;; Update PDF buffers after successful LaTeX runs
 (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook
            #'TeX-revert-document-buffer)
+
+;; Print in pdf-tools
+(setq pdf-misc-print-programm "/usr/bin/lpr")
 
 ;;(setq TeX-view-program-list
 ;;      '(("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
@@ -688,5 +697,5 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(highlight-parentheses-highlight ((nil (:weight ultra-bold))) t))
 )
